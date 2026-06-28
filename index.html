@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DailyOS — Goal Tracker</title>
+  <style>
+    :root {
+      --bg-0: #0a0a0f;
+      --bg-1: #111118;
+      --bg-2: #1a1a24;
+      --bg-3: #22222f;
+      --bg-4: #2a2a3a;
+      --border: #2e2e40;
+      --border-hi: #3d3d55;
+      --accent: #7c6fff;
+      --accent-dim: #4a44a0;
+      --accent-glow: rgba(124, 111, 255, 0.15);
+      --green: #3ddc97;
+      --green-dim: #1e6b4a;
+      --green-glow: rgba(61, 220, 151, 0.12);
+      --red: #ff5f6d;
+      --yellow: #f5c518;
+      --text-0: #f0f0ff;
+      --text-1: #b0b0cc;
+      --text-2: #6e6e8a;
+      --text-3: #44445a;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-theme="light"] {
+      --bg-0: #f4f4f8;
+      --bg-1: #ffffff;
+      --bg-2: #ebebf3;
+      --bg-3: #e0e0ec;
+      --bg-4: #d4d4e4;
+      --border: #d0d0e0;
+      --border-hi: #b8b8cc;
+      --accent: #5b4fff;
+      --accent-dim: #c5c0ff;
+      --accent-glow: rgba(91, 79, 255, 0.1);
+      --green: #1db87a;
+      --green-dim: #a8f0d4;
+      --green-glow: rgba(29, 184, 122, 0.1);
+      --red: #e03040;
+      --yellow: #d4a000;
+      --text-0: #0a0a18;
+      --text-1: #3a3a55;
+      --text-2: #7a7a9a;
+      --text-3: #b0b0c8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-0);
+      color: var(--text-0);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background var(--transition), color var(--transition);
+    }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    input, textarea { font-family: inherit; }
+
+    .app-shell {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg-0);
+      z-index: 50;
+    }
+    .topbar-left { display: flex; flex-direction: column; gap: 2px; }
+    .logo {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--text-2); font-weight: 400; }
+    .date-label {
+      font-size: 0.72rem;
+      color: var(--text-2);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-1);
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+      font-size: 1rem;
+    }
+    .icon-btn:hover {
+      background: var(--bg-3);
+      color: var(--text-0);
+      border-color: var(--border-hi);
+    }
+
+    /* STREAK CHIP */
+    .streak-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-1);
+      transition: all var(--transition);
+    }
+    .streak-chip.active {
+      border-color: var(--yellow);
+      color: var(--yellow);
+      background: rgba(245, 197, 24, 0.06);
+    }
+    .streak-num { font-weight: 700; font-size: 0.9rem; }
+
+    /* PROGRESS */
+    .progress-section { padding: 18px 0 8px; }
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .progress-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .progress-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .progress-track {
+      height: 3px;
+      background: var(--bg-3);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .progress-fill::after {
+      content: '';
+      position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex; gap: 4px;
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 4px;
+      margin: 8px 0 20px;
+    }
+    .tab-btn {
+      flex: 1; padding: 8px 4px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-2);
+      transition: all var(--transition);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+    }
+    .tab-btn.active {
+      background: var(--bg-3);
+      color: var(--text-0);
+      border: 1px solid var(--border-hi);
+    }
+    .tab-btn:hover:not(.active) { color: var(--text-1); }
+
+    /* TASK LIST */
+    .task-list { display: flex; flex-direction: column; gap: 6px; padding-bottom: 40px; }
+
+    .task-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex; align-items: center;
+      padding: 14px 14px 14px 12px;
+      gap: 12px;
+      transition: all var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .task-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .task-card:hover { border-color: var(--border-hi); background: var(--bg-2); }
+    .task-card:hover::before { opacity: 0.6; }
+    .task-card.completed {
+      border-color: var(--green-dim);
+      background: var(--green-glow);
+    }
+    .task-card.completed::before { background: var(--green); opacity: 1; }
+
+    .task-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid var(--border-hi);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+      background: var(--bg-0);
+    }
+    .task-card.completed .task-check {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .task-check svg { display: none; }
+    .task-card.completed .task-check svg { display: block; }
+
+    .task-info { flex: 1; min-width: 0; }
+    .task-name {
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--text-0);
+      transition: color var(--transition);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .task-card.completed .task-name {
+      color: var(--text-2);
+      text-decoration: line-through;
+      text-decoration-color: var(--green-dim);
+    }
+    .task-meta {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 3px; flex-wrap: wrap;
+    }
+    .task-tag {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .task-note-preview {
+      font-size: 0.68rem; color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 180px;
+    }
+    .task-time {
+      font-size: 0.65rem; color: var(--green);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .complete-btn {
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.03em;
+      border: 1px solid var(--border-hi);
+      color: var(--text-1);
+      background: var(--bg-3);
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .complete-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .task-card.completed .complete-btn {
+      border-color: var(--green-dim);
+      color: var(--green);
+      background: var(--green-glow);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--bg-1);
+      border: 1px solid var(--border-hi);
+      border-radius: 16px;
+      width: 100%; max-width: 460px;
+      padding: 28px 24px;
+      transform: translateY(16px) scale(0.98);
+      transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+    .modal-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text-0); margin-bottom: 6px;
+    }
+    .modal-subtitle {
+      font-size: 0.8rem; color: var(--text-2);
+      margin-bottom: 20px; line-height: 1.5;
+    }
+    .modal-textarea {
+      width: 100%;
+      background: var(--bg-0);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: var(--text-0);
+      font-size: 0.875rem;
+      resize: none; min-height: 110px;
+      outline: none;
+      transition: border-color var(--transition);
+      line-height: 1.6;
+    }
+    .modal-textarea::placeholder { color: var(--text-3); }
+    .modal-textarea:focus { border-color: var(--accent); }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .btn-secondary {
+      flex: 1; padding: 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      color: var(--text-2); font-weight: 600;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-3);
+      transition: all var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--border-hi); color: var(--text-0); }
+    .btn-primary {
+      flex: 2; padding: 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: #fff; font-weight: 700;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid transparent;
+      transition: all var(--transition);
+      letter-spacing: 0.04em;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:active { transform: scale(0.98); }
+
+    /* STREAK BANNER */
+    .streak-banner {
+      background: var(--bg-2);
+      border: 1px solid var(--yellow);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: none;
+      align-items: center; gap: 14px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .streak-banner.show { display: flex; }
+    .streak-banner-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .streak-banner-text h3 { font-size: 0.9rem; font-weight: 700; color: var(--yellow); }
+    .streak-banner-text p { font-size: 0.75rem; color: var(--text-2); margin-top: 2px; }
+    .banner-close {
+      position: absolute; right: 12px; top: 12px;
+      color: var(--text-3); font-size: 0.8rem;
+      transition: color var(--transition);
+    }
+    .banner-close:hover { color: var(--text-1); }
+
+    /* CALENDAR */
+    .calendar-section { padding-bottom: 40px; }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .cal-month {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700; font-size: 0.95rem;
+      color: var(--text-0);
+    }
+    .cal-nav { display: flex; gap: 6px; }
+    .cal-nav-btn {
+      width: 30px; height: 30px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-2); border: 1px solid var(--border);
+      color: var(--text-1); font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .cal-nav-btn:hover { background: var(--bg-3); border-color: var(--border-hi); }
+
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .cal-day-name {
+      text-align: center; padding: 6px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-2);
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      position: relative;
+      transition: all var(--transition);
+    }
+    .cal-cell.empty { background: transparent; border-color: transparent; }
+    .cal-cell.today { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+    .cal-cell.streak-day {
+      background: var(--green-glow);
+      border-color: var(--green-dim);
+      color: var(--green);
+    }
+    .cal-cell.streak-day::after {
+      content: '';
+      position: absolute; bottom: 3px;
+      width: 4px; height: 4px;
+      background: var(--green); border-radius: 50%;
+    }
+    .cal-cell.missed-day {
+      background: rgba(255,95,109,0.05);
+      border-color: rgba(255,95,109,0.2);
+      color: var(--text-3);
+    }
+    .cal-cell.future-day { opacity: 0.3; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 12px; text-align: center;
+    }
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--text-0); display: block;
+    }
+    .stat-label {
+      font-size: 0.68rem; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.07em;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px; display: block;
+    }
+
+    /* LOGS */
+    .logs-section { padding-bottom: 40px; }
+    .log-date-group { margin-bottom: 24px; }
+    .log-date-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 8px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .log-entry {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px; margin-bottom: 6px;
+    }
+    .log-entry-task {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--accent); margin-bottom: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .log-entry-note { font-size: 0.82rem; color: var(--text-1); line-height: 1.5; }
+    .log-entry-time {
+      font-size: 0.65rem; color: var(--text-3);
+      font-family: 'JetBrains Mono', monospace; margin-top: 6px;
+    }
+
+    .empty-state {
+      text-align: center; padding: 48px 20px; color: var(--text-3);
+    }
+    .empty-state-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.83rem; line-height: 1.6; }
+
+    /* SYNC INDICATOR */
+    .sync-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--text-3);
+      display: inline-block; margin-left: 6px;
+      transition: background 0.3s;
+    }
+    .sync-dot.syncing { background: var(--yellow); animation: pulse 1s infinite; }
+    .sync-dot.synced  { background: var(--green); }
+    .sync-dot.error   { background: var(--red); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 200; display: flex; flex-direction: column;
+      gap: 8px; align-items: center; pointer-events: none;
+    }
+    .toast {
+      background: var(--bg-3);
+      border: 1px solid var(--border-hi);
+      border-radius: 20px;
+      padding: 9px 18px;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-0); white-space: nowrap;
+      animation: toastIn 0.25s ease forwards, toastOut 0.25s ease 2.5s forwards;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    @keyframes toastIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes toastOut { from{opacity:1} to{opacity:0} }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-0); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 99px; }
+
+    @media (min-width: 480px) {
+      .task-name { font-size: 0.95rem; }
+      .modal { padding: 32px 28px; }
+    }
+    @media (min-width: 640px) {
+      .app-shell { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">daily<span>.os</span><span class="sync-dot" id="sync-dot"></span></div>
+      <div class="date-label" id="date-label">—</div>
+    </div>
+    <div class="topbar-right">
+      <div class="streak-chip" id="streak-chip">
+        <span>🔥</span>
+        <span class="streak-num" id="streak-num">0</span>
+        <span>day</span>
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="Toggle theme">
+        <span id="theme-icon">☀</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- TABS -->
+    <div class="tabs" style="margin-top:16px">
+      <button class="tab-btn active" data-tab="tasks">Tasks</button>
+      <button class="tab-btn" data-tab="calendar">Calendar</button>
+      <button class="tab-btn" data-tab="logs">Logs</button>
+    </div>
+
+    <!-- TAB: TASKS -->
+    <div id="tab-tasks">
+      <div class="streak-banner" id="streak-banner">
+        <div class="streak-banner-icon">🏆</div>
+        <div class="streak-banner-text">
+          <h3 id="banner-title">Day streak achieved!</h3>
+          <p id="banner-sub">All 10 tasks completed. Keep going!</p>
+        </div>
+        <button class="banner-close" id="banner-close">✕</button>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-title">Today's Progress</span>
+          <span class="progress-count" id="progress-count">0 / 10</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="task-list" id="task-list"></div>
+    </div>
+
+    <!-- TAB: CALENDAR -->
+    <div id="tab-calendar" style="display:none">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-val" id="stat-streak">0</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-best">0</span>
+          <span class="stat-label">Best</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-total">0</span>
+          <span class="stat-label">Perfect Days</span>
+        </div>
+      </div>
+      <div class="calendar-section">
+        <div class="cal-header">
+          <span class="cal-month" id="cal-month">—</span>
+          <div class="cal-nav">
+            <button class="cal-nav-btn" id="cal-prev">‹</button>
+            <button class="cal-nav-btn" id="cal-next">›</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+    </div>
+
+    <!-- TAB: LOGS -->
+    <div id="tab-logs" style="display:none">
+      <div class="logs-section" id="logs-section"></div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-tag" id="modal-tag">Check-in</div>
+    <div class="modal-title" id="modal-title">What did you work on?</div>
+    <div class="modal-subtitle" id="modal-subtitle">
+      Reflect on what you learned or achieved today.
+    </div>
+    <textarea
+      class="modal-textarea"
+      id="modal-textarea"
+      placeholder="Write your thoughts, learnings, or progress notes…"
+      rows="5"
+    ></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="modal-cancel">Skip</button>
+      <button class="btn-primary" id="modal-confirm">✓ Mark Complete</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════ */
+const TASKS = [
+  { id: 'nvidia',    name: 'Nvidia / Career',  tag: 'Career'   },
+  { id: 'rap',       name: 'Rap Practice',      tag: 'Creative' },
+  { id: 'matkits',   name: 'Matkits',           tag: 'Tasks'    },
+  { id: 'msedge',    name: 'Microsoft Edge',    tag: 'Tasks'    },
+  { id: 'timebucks', name: 'Timebucks',         tag: 'Tasks'    },
+  { id: 'python',    name: 'Python Course',     tag: 'Learning' },
+  { id: 'github',    name: 'GitHub Project',    tag: 'Dev'      },
+  { id: 'leetcode',  name: 'Leetcode Solve',    tag: 'Dev'      },
+  { id: 'youtube',   name: 'YT Video',          tag: 'Content'  },
+  { id: 'startup',   name: 'Startup Project',   tag: 'Business' },
+];
+
+// ── PASTE YOUR VALUES HERE AFTER DEPLOYING ──
+const API_BASE = '/api/tracker';   // works on Vercel
+// const API_BASE = 'http://localhost:3000/api/tracker'; // for local testing
+
+/* ══════════════════════════════════════════
+   DEVICE ID  (no login needed)
+══════════════════════════════════════════ */
+function getDeviceId() {
+  let id = localStorage.getItem('dailyos_device_id');
+  if (!id) {
+    id = 'dev_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    localStorage.setItem('dailyos_device_id', id);
+  }
+  return id;
+}
+const DEVICE_ID = getDeviceId();
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let state      = {};   // { taskId: { completed, note, time } }
+let streakData = { current: 0, best: 0, lastDate: null };
+let history    = {};   // { 'YYYY-MM-DD': true/false }
+let logs       = {};   // { 'YYYY-MM-DD': [{taskId,task,note,time}] }
+let pendingTask = null;
+let calViewDate = new Date();
+
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function getPrevDay(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0,10);
+}
+function getCompletedCount() {
+  return TASKS.filter(t => state[t.id]?.completed).length;
+}
+
+/* ══════════════════════════════════════════
+   SYNC DOT
+══════════════════════════════════════════ */
+function setSyncState(s) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot ' + s;
+}
+
+/* ══════════════════════════════════════════
+   API CALLS
+══════════════════════════════════════════ */
+async function apiGet(action, extra = {}) {
+  const params = new URLSearchParams({ action, device_id: DEVICE_ID, ...extra });
+  const r = await fetch(`${API_BASE}?${params}`);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+async function apiPost(action, body = {}) {
+  const r = await fetch(`${API_BASE}?action=${action}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ device_id: DEVICE_ID, ...body }),
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+/* ══════════════════════════════════════════
+   LOCAL STORAGE FALLBACK
+══════════════════════════════════════════ */
+const LS = {
+  save(key, val) { try { localStorage.setItem('dailyos_' + key, JSON.stringify(val)); } catch {} },
+  load(key, def) { try { return JSON.parse(localStorage.getItem('dailyos_' + key)) ?? def; } catch { return def; } },
+};
+
+function saveStateLocal() {
+  const s = { ...state, _date: todayKey() };
+  LS.save('state', s);
+}
+function saveStreakLocal() { LS.save('streak', streakData); }
+function saveHistoryLocal() { LS.save('history', history); }
+function saveLogsLocal() { LS.save('logs', logs); }
+
+/* ══════════════════════════════════════════
+   LOAD DATA  (cloud → fallback local)
+══════════════════════════════════════════ */
+async function loadAll() {
+  setSyncState('syncing');
+  try {
+    const today = todayKey();
+
+    // load streak
+    const sRes = await apiGet('get-streak');
+    if (sRes.success && sRes.data) {
+      streakData = {
+        current: sRes.data.current || 0,
+        best: sRes.data.best || 0,
+        lastDate: sRes.data.last_date || null,
+      };
+      saveStreakLocal();
+    }
+
+    // load today's state
+    const stRes = await apiGet('get-state', { date_key: today });
+    if (stRes.success && stRes.data) {
+      state = { _date: today };
+      stRes.data.forEach(row => {
+        state[row.task_id] = {
+          completed: row.completed,
+          note: row.note || '',
+          time: row.completed_at
+            ? new Date(row.completed_at).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
+            : '',
+        };
+      });
+      saveStateLocal();
+    }
+
+    // load history
+    const hRes = await apiGet('get-history');
+    if (hRes.success && hRes.data) {
+      history = {};
+      hRes.data.forEach(row => { history[row.date_key] = row.is_perfect; });
+      saveHistoryLocal();
+    }
+
+    // load logs
+    const lRes = await apiGet('get-logs');
+    if (lRes.success && lRes.data) {
+      logs = {};
+      lRes.data.forEach(row => {
+        if (!logs[row.date_key]) logs[row.date_key] = [];
+        const exists = logs[row.date_key].find(e => e.taskId === row.task_id);
+        if (!exists) {
+          logs[row.date_key].push({
+            taskId: row.task_id,
+            task: row.task_name,
+            note: row.note,
+            time: row.logged_at
+              ? new Date(row.logged_at).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
+              : '',
+          });
+        }
+      });
+      saveLogsLocal();
+    }
+
+    setSyncState('synced');
+  } catch (err) {
+    console.warn('Cloud load failed, using local storage:', err.message);
+    loadFromLocal();
+    setSyncState('error');
+    showToast('⚠ Offline mode — using local data');
+  }
+}
+
+function loadFromLocal() {
+  const today = todayKey();
+  const savedState = LS.load('state', { _date: today });
+  if (savedState._date !== today) {
+    state = { _date: today };
+  } else {
+    state = savedState;
+  }
+  streakData = LS.load('streak', { current: 0, best: 0, lastDate: null });
+  history    = LS.load('history', {});
+  logs       = LS.load('logs', {});
+}
+
+/* ══════════════════════════════════════════
+   COMPLETE TASK → CLOUD + LOCAL
+══════════════════════════════════════════ */
+async function completeTask(task, note) {
+  const today = todayKey();
+  const timeStr = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+
+  // update local state immediately
+  state[task.id] = { completed: true, note, time: timeStr };
+  saveStateLocal();
+
+  // update logs locally
+  if (!logs[today]) logs[today] = [];
+  const idx = logs[today].findIndex(l => l.taskId === task.id);
+  const entry = { taskId: task.id, task: task.name, note, time: timeStr };
+  if (idx >= 0) logs[today][idx] = entry;
+  else logs[today].push(entry);
+  saveLogsLocal();
+
+  // render immediately
+  renderTaskList();
+  updateProgress();
+  checkAllComplete();
+
+  // sync to cloud in background
+  setSyncState('syncing');
+  try {
+    await apiPost('complete-task', {
+      date_key: today,
+      task_id: task.id,
+      task_name: task.name,
+      note,
+    });
+    setSyncState('synced');
+  } catch (err) {
+    console.warn('Sync failed:', err.message);
+    setSyncState('error');
+  }
+}
+
+/* ══════════════════════════════════════════
+   DAY COMPLETION
+══════════════════════════════════════════ */
+async function checkAllComplete() {
+  if (getCompletedCount() !== TASKS.length) return;
+
+  const today = todayKey();
+  if (history[today] === true) return; // already recorded
+
+  history[today] = true;
+  saveHistoryLocal();
+
+  // update streak locally
+  const yesterday = getPrevDay(today);
+  if (streakData.lastDate === yesterday || streakData.lastDate === null) {
+    streakData.current += 1;
+  } else if (streakData.lastDate === today) {
+    // no change
+  } else {
+    streakData.current = 1;
+  }
+  streakData.lastDate = today;
+  streakData.best = Math.max(streakData.best, streakData.current);
+  saveStreakLocal();
+
+  updateStreakChip();
+  updateCalendarStats();
+  showStreakBanner();
+
+  // sync to cloud
+  setSyncState('syncing');
+  try {
+    await apiPost('record-day', {
+      date_key: today,
+      is_perfect: true,
+      tasks_done: TASKS.length,
+    });
+    setSyncState('synced');
+  } catch (err) {
+    console.warn('Streak sync failed:', err.message);
+    setSyncState('error');
+  }
+}
+
+/* ══════════════════════════════════════════
+   MIDNIGHT RESET
+══════════════════════════════════════════ */
+function scheduleMidnightReset() {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const ms = midnight - now;
+
+  setTimeout(async () => {
+    // record missed day if not perfect
+    const yesterday = getPrevDay(todayKey());
+    if (history[yesterday] === undefined && getCompletedCount() < TASKS.length) {
+      history[yesterday] = false;
+      saveHistoryLocal();
+      if (streakData.lastDate !== yesterday) {
+        streakData.current = 0;
+        saveStreakLocal();
+      }
+      try {
+        await apiPost('record-day', {
+          date_key: yesterday,
+          is_perfect: false,
+          tasks_done: getCompletedCount(),
+        });
+      } catch {}
+    }
+
+    // reset for new day
+    state = { _date: todayKey() };
+    saveStateLocal();
+    await loadAll();
+    renderTaskList();
+    updateProgress();
+    updateStreakChip();
+    renderCalendar();
+    renderLogs();
+    showToast('🌅 New day — tasks reset!');
+    scheduleMidnightReset();
+  }, ms);
+}
+
+/* ══════════════════════════════════════════
+   THEME
+══════════════════════════════════════════ */
+function initTheme() {
+  const saved = localStorage.getItem('dailyos_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('theme-icon').textContent = saved === 'dark' ? '☀' : '◑';
+}
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const cur  = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('dailyos_theme', next);
+  document.getElementById('theme-icon').textContent = next === 'dark' ? '☀' : '◑';
+});
+
+/* ══════════════════════════════════════════
+   RENDER TASKS
+══════════════════════════════════════════ */
+function renderTaskList() {
+  const list = document.getElementById('task-list');
+  list.innerHTML = '';
+
+  TASKS.forEach(task => {
+    const ts = state[task.id] || {};
+    const completed = !!ts.completed;
+
+    const card = document.createElement('div');
+    card.className = `task-card ${completed ? 'completed' : ''}`;
+
+    card.innerHTML = `
+      <div class="task-check">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+          <path d="M1 5L4.5 8.5L11 1" stroke="#0a0a0f" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="task-info">
+        <div class="task-name">${task.name}</div>
+        <div class="task-meta">
+          <span class="task-tag">${task.tag}</span>
+          ${ts.note ? `<span class="task-note-preview">· ${ts.note.slice(0,40)}${ts.note.length>40?'…':''}</span>` : ''}
+          ${completed && ts.time ? `<span class="task-time">· ${ts.time}</span>` : ''}
+        </div>
+      </div>
+      <button class="complete-btn">${completed ? '✓ done' : 'check in'}</button>
+    `;
+
+    const btn = card.querySelector('.complete-btn');
+    btn.addEventListener('click', e => { e.stopPropagation(); openModal(task); });
+    card.addEventListener('click', () => openModal(task));
+    list.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════ */
+function updateProgress() {
+  const count = getCompletedCount();
+  const total = TASKS.length;
+  document.getElementById('progress-count').textContent = `${count} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${(count/total)*100}%`;
+}
+
+/* ══════════════════════════════════════════
+   STREAK CHIP
+══════════════════════════════════════════ */
+function updateStreakChip() {
+  const chip = document.getElementById('streak-chip');
+  document.getElementById('streak-num').textContent = streakData.current || 0;
+  chip.className = `streak-chip ${streakData.current > 0 ? 'active' : ''}`;
+}
+
+/* ══════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════ */
+function openModal(task) {
+  pendingTask = task;
+  const ts = state[task.id] || {};
+  document.getElementById('modal-tag').textContent      = task.tag;
+  document.getElementById('modal-title').textContent    = task.name;
+  document.getElementById('modal-subtitle').textContent = ts.completed
+    ? 'Update your reflection for this task.'
+    : 'What did you learn or accomplish in this task today?';
+  document.getElementById('modal-textarea').value       = ts.note || '';
+  document.getElementById('modal-confirm').textContent  = ts.completed ? '✓ Update' : '✓ Mark Complete';
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('modal-textarea').focus(), 250);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  pendingTask = null;
+}
+
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('modal-confirm').addEventListener('click', async () => {
+  if (!pendingTask) return;
+  const note = document.getElementById('modal-textarea').value.trim();
+  closeModal();
+  await completeTask(pendingTask, note);
+  showToast(`✓ ${pendingTask.name} checked in`);
+});
+
+/* ══════════════════════════════════════════
+   STREAK BANNER
+══════════════════════════════════════════ */
+function showStreakBanner() {
+  document.getElementById('banner-title').textContent =
+    `🔥 ${streakData.current}-day streak!`;
+  document.getElementById('banner-sub').textContent =
+    `All ${TASKS.length} tasks done. Best: ${streakData.best} days.`;
+  document.getElementById('streak-banner').classList.add('show');
+}
+document.getElementById('banner-close').addEventListener('click', () => {
+  document.getElementById('streak-banner').classList.remove('show');
+});
+
+/* ══════════════════════════════════════════
+   CALENDAR
+══════════════════════════════════════════ */
+function renderCalendar() {
+  const today = new Date();
+  const year  = calViewDate.getFullYear();
+  const month = calViewDate.getMonth();
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+
+  document.getElementById('cal-month').textContent = `${months[month]} ${year}`;
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-day-name'; el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay    = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const todayStr    = todayKey();
+
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-cell empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell';
+    cell.textContent = d;
+
+    if (dateStr === todayStr)          cell.classList.add('today');
+    else if (history[dateStr] === true)  cell.classList.add('streak-day');
+    else if (history[dateStr] === false) cell.classList.add('missed-day');
+    else if (new Date(year, month, d) > today) cell.classList.add('future-day');
+
+    grid.appendChild(cell);
+  }
+}
+
+function updateCalendarStats() {
+  document.getElementById('stat-streak').textContent = streakData.current || 0;
+  document.getElementById('stat-best').textContent   = streakData.best    || 0;
+  document.getElementById('stat-total').textContent  =
+    Object.values(history).filter(v => v === true).length;
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  calViewDate.setMonth(calViewDate.getMonth() - 1); renderCalendar();
+});
+document.getElementById('cal-next').addEventListener('click', () => {
+  calViewDate.setMonth(calViewDate.getMonth() + 1); renderCalendar();
+});
+
+/* ══════════════════════════════════════════
+   LOGS
+══════════════════════════════════════════ */
+function renderLogs() {
+  const section = document.getElementById('logs-section');
+  const dates   = Object.keys(logs).sort((a,b) => b.localeCompare(a));
+
+  if (dates.length === 0) {
+    section.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <p>No check-ins yet.<br>Complete tasks to see your learning log here.</p>
+      </div>`;
+    return;
+  }
+
+  section.innerHTML = '';
+  dates.forEach(date => {
+    const entries = logs[date];
+    if (!entries?.length) return;
+    const group = document.createElement('div');
+    group.className = 'log-date-group';
+    const d = new Date(date + 'T00:00:00');
+    const label = d.toLocaleDateString('en-US', {
+      weekday:'long', year:'numeric', month:'long', day:'numeric'
+    });
+    group.innerHTML = `<div class="log-date-header">${label}</div>`;
+    entries.forEach(entry => {
+      const el = document.createElement('div');
+      el.className = 'log-entry';
+      el.innerHTML = `
+        <div class="log-entry-task">${entry.task}</div>
+        <div class="log-entry-note">${entry.note ||
+          '<em style="color:var(--text-3)">No note recorded.</em>'}</div>
+        <div class="log-entry-time">${entry.time}</div>
+      `;
+      group.appendChild(el);
+    });
+    section.appendChild(group);
+  });
+}
+
+/* ══════════════════════════════════════════
+   TABS
+══════════════════════════════════════════ */
+const tabContents = {
+  tasks:    document.getElementById('tab-tasks'),
+  calendar: document.getElementById('tab-calendar'),
+  logs:     document.getElementById('tab-logs'),
+};
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    Object.entries(tabContents).forEach(([k,v]) => {
+      v.style.display = k === tab ? 'block' : 'none';
+    });
+    if (tab === 'calendar') { renderCalendar(); updateCalendarStats(); }
+    if (tab === 'logs')     renderLogs();
+  });
+});
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+/* ══════════════════════════════════════════
+   DATE LABEL
+══════════════════════════════════════════ */
+function updateDateLabel() {
+  const d = new Date();
+  document.getElementById('date-label').textContent =
+    d.toLocaleDateString('en-US', {
+      weekday:'long', month:'short', day:'numeric'
+    }).toUpperCase();
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+async function init() {
+  initTheme();
+  updateDateLabel();
+  loadFromLocal();          // render immediately from cache
+  renderTaskList();
+  updateProgress();
+  updateStreakChip();
+  await loadAll();          // then sync from cloud
+  renderTaskList();
+  updateProgress();
+  updateStreakChip();
+  scheduleMidnightReset();
+  if (history[todayKey()] === true && getCompletedCount() === TASKS.length) {
+    showStreakBanner();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
