@@ -1111,9 +1111,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 document.getElementById('modal-confirm').addEventListener('click', async () => {
   if (!pendingTask) return;
   const note = document.getElementById('modal-textarea').value.trim();
+  const taskCopy = { ...pendingTask }; // copy before closing modal
   closeModal();
-  await completeTask(pendingTask, note);
-  showToast(`✓ ${pendingTask.name} checked in`);
+  await completeTask(taskCopy, note);
+  showToast(`✓ ${taskCopy.name} checked in`);
 });
 
 /* ══════════════════════════════════════════
