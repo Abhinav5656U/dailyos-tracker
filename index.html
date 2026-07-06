@@ -61,24 +61,13 @@
     button{cursor:pointer;border:none;background:none;font-family:inherit}
     input,textarea{font-family:inherit}
 
-    /* ── LAYOUT ── */
     .app-shell{
-      width:100%;
-      max-width:100%;
-      margin:0 auto;
-      padding:0 16px;
+      width:100%;max-width:100%;margin:0 auto;padding:0 16px;
     }
-    @media(min-width:900px){
-      .app-shell{ padding:0 60px; }
-    }
-    @media(min-width:1200px){
-      .app-shell{ padding:0 120px; }
-    }
-    @media(min-width:1600px){
-      .app-shell{ padding:0 200px; }
-    }
+    @media(min-width:900px){ .app-shell{ padding:0 60px; } }
+    @media(min-width:1200px){ .app-shell{ padding:0 120px; } }
+    @media(min-width:1600px){ .app-shell{ padding:0 200px; } }
 
-    /* ── TOP BAR ── */
     .topbar{
       display:flex;align-items:center;justify-content:space-between;
       padding:16px 0 14px;border-bottom:1px solid var(--border);
@@ -124,12 +113,10 @@
     }
     .icon-btn:hover{background:var(--bg-3);color:var(--text-0);border-color:var(--border-hi)}
 
-    /* ── RESET COUNTDOWN ── */
     .reset-bar{
       display:flex;align-items:center;gap:12px;
       background:var(--bg-1);border:1px solid var(--border);
-      border-radius:var(--radius);padding:10px 16px;
-      margin-top:14px;
+      border-radius:var(--radius);padding:10px 16px;margin-top:14px;
     }
     .reset-label{
       font-size:0.68rem;color:var(--text-2);
@@ -152,15 +139,12 @@
     }
     .tasks-left-badge b{color:var(--accent)}
 
-    /* ── STOPWATCH CARD ── */
     .sw-card{
       background:var(--bg-1);border:1px solid var(--border);
-      border-radius:var(--radius);padding:16px;
-      margin-top:12px;
+      border-radius:var(--radius);padding:16px;margin-top:12px;
     }
     .sw-card-header{
-      display:flex;align-items:center;justify-content:space-between;
-      margin-bottom:14px;
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;
     }
     .sw-card-title{
       font-size:0.7rem;font-weight:600;text-transform:uppercase;
@@ -178,14 +162,11 @@
     }
     .sw-sync-badge.synced .dot{background:var(--green)}
     .sw-sync-badge.synced{color:var(--green)}
-    .sw-body{
-      display:flex;align-items:center;gap:14px;
-    }
+    .sw-body{display:flex;align-items:center;gap:14px;}
     .sw-time-display{
       font-family:'JetBrains Mono',monospace;
       font-size:2.6rem;font-weight:700;
-      color:var(--text-0);letter-spacing:0.04em;
-      flex:1;
+      color:var(--text-0);letter-spacing:0.04em;flex:1;
     }
     .sw-time-display.running{color:var(--yellow)}
     .sw-controls{display:flex;gap:8px}
@@ -193,24 +174,16 @@
       padding:10px 24px;border-radius:var(--radius-sm);
       font-size:0.85rem;font-weight:700;
       font-family:'JetBrains Mono',monospace;
-      border:1px solid;transition:all var(--transition);
-      letter-spacing:0.04em;
+      border:1px solid;transition:all var(--transition);letter-spacing:0.04em;
     }
-    .sw-btn.start{
+    .sw-btn.unpause{
       border-color:var(--green);color:var(--green);background:var(--green-glow);
     }
-    .sw-btn.stop{
-      border-color:var(--red);color:var(--red);background:rgba(255,95,109,0.08);
+    .sw-btn.pause{
+      border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,0.08);
     }
     .sw-btn:hover{opacity:0.8}
-    .sw-today-total{
-      font-size:0.7rem;color:var(--text-2);
-      font-family:'JetBrains Mono',monospace;
-      margin-top:10px;
-    }
-    .sw-today-total span{color:var(--yellow);font-weight:700}
 
-    /* ── TABS ── */
     .tabs{
       display:flex;gap:4px;background:var(--bg-1);
       border:1px solid var(--border);border-radius:var(--radius);
@@ -227,7 +200,6 @@
     }
     .tab-btn:hover:not(.active){color:var(--text-1)}
 
-    /* ── STREAK BANNER ── */
     .streak-banner{
       background:var(--bg-2);border:1px solid var(--yellow);
       border-radius:var(--radius);padding:12px 14px;
@@ -239,12 +211,10 @@
     .streak-banner-text h3{font-size:0.88rem;font-weight:700;color:var(--yellow)}
     .streak-banner-text p{font-size:0.73rem;color:var(--text-2);margin-top:2px}
     .banner-close{
-      position:absolute;right:10px;top:10px;
-      color:var(--text-3);font-size:0.75rem;
+      position:absolute;right:10px;top:10px;color:var(--text-3);font-size:0.75rem;
     }
     .banner-close:hover{color:var(--text-1)}
 
-    /* ── PROGRESS ── */
     .progress-section{padding:0 0 12px}
     .progress-header{
       display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
@@ -269,9 +239,7 @@
       box-shadow:0 0 6px var(--accent);
     }
 
-    /* ── TASK LIST ── */
     .task-list{display:flex;flex-direction:column;gap:6px;padding-bottom:40px}
-
     .task-card{
       background:var(--bg-1);border:1px solid var(--border);
       border-radius:var(--radius);display:flex;align-items:center;
@@ -327,7 +295,6 @@
     .task-time-badge{
       font-size:0.63rem;color:var(--green);font-family:'JetBrains Mono',monospace;
     }
-
     .complete-btn{
       padding:6px 14px;border-radius:var(--radius-sm);
       font-size:0.75rem;font-weight:700;
@@ -343,7 +310,6 @@
       border-color:var(--green-dim);color:var(--green);background:var(--green-glow);
     }
 
-    /* ── CALENDAR ── */
     .calendar-wrap{padding-bottom:40px}
     .cal-stats-row{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;
@@ -381,9 +347,7 @@
       transition:all var(--transition);
     }
     .cal-nav-btn:hover{background:var(--bg-3);border-color:var(--border-hi)}
-    .cal-grid{
-      display:grid;grid-template-columns:repeat(7,1fr);gap:4px;
-    }
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
     .cal-day-name{
       text-align:center;padding:6px 0;
       font-family:'JetBrains Mono',monospace;font-size:0.65rem;
@@ -411,7 +375,6 @@
     }
     .cal-cell.future-day{opacity:0.3}
 
-    /* ── LOGS ── */
     .logs-wrap{padding-bottom:40px}
     .log-date-group{margin-bottom:20px}
     .log-date-header{
@@ -423,10 +386,14 @@
       background:var(--bg-1);border:1px solid var(--border);
       border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;
     }
+    .log-entry.hours-entry{
+      border-color:rgba(245,197,24,0.25);background:rgba(245,197,24,0.04);
+    }
     .log-entry-task{
       font-size:0.8rem;font-weight:600;color:var(--accent);
       margin-bottom:4px;font-family:'JetBrains Mono',monospace;
     }
+    .log-entry.hours-entry .log-entry-task{color:var(--yellow)}
     .log-entry-note{font-size:0.82rem;color:var(--text-1);line-height:1.5}
     .log-entry-meta{display:flex;gap:10px;margin-top:6px;align-items:center}
     .log-entry-time{font-size:0.63rem;color:var(--text-3);font-family:'JetBrains Mono',monospace}
@@ -436,7 +403,6 @@
     .empty-state-icon{font-size:2.2rem;margin-bottom:10px}
     .empty-state p{font-size:0.82rem;line-height:1.6}
 
-    /* ── MODALS ── */
     .modal-overlay{
       position:fixed;inset:0;background:rgba(0,0,0,0.78);
       backdrop-filter:blur(8px);z-index:100;
@@ -488,7 +454,6 @@
     .btn-primary:hover{opacity:0.88}
     .btn-primary:active{transform:scale(0.98)}
 
-    /* ── TOAST ── */
     .toast-container{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
       z-index:200;display:flex;flex-direction:column;gap:8px;
@@ -513,7 +478,6 @@
 <body>
 <div class="app-shell">
 
-  <!-- TOP BAR -->
   <header class="topbar">
     <div class="topbar-left">
       <div class="logo">
@@ -534,7 +498,6 @@
     </div>
   </header>
 
-  <!-- RESET COUNTDOWN -->
   <div class="reset-bar">
     <span class="reset-label">Resets in</span>
     <span class="reset-time" id="reset-time">--:--:--</span>
@@ -548,7 +511,6 @@
     </div>
   </div>
 
-  <!-- STOPWATCH -->
   <div class="sw-card">
     <div class="sw-card-header">
       <span class="sw-card-title">⏱ Daily Stopwatch</span>
@@ -559,22 +521,17 @@
     <div class="sw-body">
       <div class="sw-time-display" id="sw-display">00:00:00</div>
       <div class="sw-controls">
-        <button class="sw-btn start" id="sw-btn">▶ Start</button>
+        <button class="sw-btn unpause" id="sw-btn">▶ Unpause</button>
       </div>
-    </div>
-    <div class="sw-today-total" id="sw-total-label">
-      Today's total: <span id="sw-total-val">00:00:00</span>
     </div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
     <button class="tab-btn active" data-tab="tasks">Tasks</button>
     <button class="tab-btn" data-tab="calendar">Calendar</button>
     <button class="tab-btn" data-tab="logs">Logs</button>
   </div>
 
-  <!-- TAB: TASKS -->
   <div id="tab-tasks">
     <div class="streak-banner" id="streak-banner">
       <div class="streak-banner-icon">🏆</div>
@@ -598,7 +555,6 @@
     <div class="task-list" id="task-list"></div>
   </div>
 
-  <!-- TAB: CALENDAR -->
   <div id="tab-calendar" style="display:none">
     <div class="calendar-wrap">
       <div class="cal-stats-row">
@@ -628,24 +584,20 @@
     </div>
   </div>
 
-  <!-- TAB: LOGS -->
   <div id="tab-logs" style="display:none">
     <div class="logs-wrap" id="logs-section"></div>
   </div>
 
-</div><!-- end app-shell -->
+</div>
 
 <!-- CHECKIN MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-tag" id="modal-tag">Check-in</div>
     <div class="modal-title" id="modal-title">What did you work on?</div>
-    <div class="modal-subtitle" id="modal-subtitle">
-      Reflect on what you learned today.
-    </div>
+    <div class="modal-subtitle" id="modal-subtitle">Reflect on what you learned today.</div>
     <textarea class="modal-textarea" id="modal-textarea"
-      placeholder="Write your thoughts, learnings, or progress notes…"
-      rows="4"></textarea>
+      placeholder="Write your thoughts, learnings, or progress notes…" rows="4"></textarea>
     <div class="modal-actions">
       <button class="btn-secondary" id="modal-cancel">Skip</button>
       <button class="btn-primary" id="modal-confirm">✓ Mark Complete</button>
@@ -658,9 +610,7 @@
   <div class="modal">
     <div class="modal-tag">Rename Task</div>
     <div class="modal-title">Edit Task Name</div>
-    <div class="modal-subtitle">
-      Change this task to something you're currently working on.
-    </div>
+    <div class="modal-subtitle">Change this task to something you're currently working on.</div>
     <input class="modal-input" id="rename-input" type="text"
       placeholder="New task name…" maxlength="60"/>
     <div class="modal-actions">
@@ -705,7 +655,6 @@ let renamingTask = null;
 let calViewDate  = new Date();
 
 // stopwatch
-let swElapsed    = 0;
 let swTotalToday = 0;
 let swRunning    = false;
 let swInterval   = null;
@@ -732,6 +681,14 @@ function formatTime(sec) {
   const s = sec%60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
+function formatHumanTime(sec) {
+  const h = Math.floor(sec/3600);
+  const m = Math.floor((sec%3600)/60);
+  if (h > 0 && m > 0) return `${h}h ${m}m`;
+  if (h > 0)          return `${h}h`;
+  if (m > 0)          return `${m}m`;
+  return '< 1m';
+}
 function secsUntilMidnight() {
   const now = new Date();
   const mid = new Date(now);
@@ -757,8 +714,9 @@ function loadTaskNamesLocal() {
 function saveTaskNamesLocal() {
   LS.save('tasknames', TASKS.map(t => ({ id:t.id, name:t.name })));
 }
+
 function loadSwLocal() {
-  const date = LS.load('sw_date','');
+  const date = LS.load('sw_date', '');
   if (date === todayKey()) {
     swTotalToday = LS.load('sw_total', 0);
   } else {
@@ -766,11 +724,15 @@ function loadSwLocal() {
     LS.save('sw_total', 0);
     LS.save('sw_date', todayKey());
   }
+  // Always start paused on page load — user explicitly unpauses
+  swRunning = false;
 }
+
 function saveSwLocal() {
   LS.save('sw_total', swTotalToday);
   LS.save('sw_date', todayKey());
 }
+
 function loadFromLocal() {
   const today = todayKey();
   const s = LS.load('state', { _date: today });
@@ -815,7 +777,7 @@ async function loadAll() {
     const today = todayKey();
     const [sRes, stRes, hRes, lRes, nRes, swRes] = await Promise.all([
       apiGet('get-streak'),
-      apiGet('get-state',    { date_key: today }),
+      apiGet('get-state',     { date_key: today }),
       apiGet('get-history'),
       apiGet('get-logs'),
       apiGet('get-tasknames'),
@@ -856,23 +818,23 @@ async function loadAll() {
       logs = {};
       lRes.data.forEach(row => {
         if (!logs[row.date_key]) logs[row.date_key] = [];
-        if (!logs[row.date_key].find(e => e.taskId === row.task_id)) {
-          logs[row.date_key].push({
-            taskId:   row.task_id,
-            task:     row.task_name,
-            note:     row.note,
-            duration: row.duration_seconds || 0,
-            time:     row.logged_at
-              ? new Date(row.logged_at)
-                  .toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
-              : '',
-          });
-        }
+        const existingIdx = logs[row.date_key].findIndex(e => e.taskId === row.task_id);
+        const entry = {
+          taskId:   row.task_id,
+          task:     row.task_name,
+          note:     row.note,
+          duration: row.duration_seconds || 0,
+          time:     row.logged_at
+            ? new Date(row.logged_at)
+                .toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
+            : '',
+        };
+        if (existingIdx >= 0) logs[row.date_key][existingIdx] = entry;
+        else logs[row.date_key].push(entry);
       });
       LS.save('logs', logs);
     }
 
-    // sync task names
     if (nRes.success && nRes.data && nRes.data.length > 0) {
       nRes.data.forEach(row => {
         const t = TASKS.find(x => x.id === row.task_id);
@@ -881,7 +843,6 @@ async function loadAll() {
       saveTaskNamesLocal();
     }
 
-    // sync stopwatch
     if (swRes.success && swRes.data) {
       const cloudTotal = swRes.data.total_seconds || 0;
       if (cloudTotal > swTotalToday) {
@@ -914,8 +875,11 @@ async function completeTask(task, note) {
   if (!logs[today]) logs[today] = [];
   const idx   = logs[today].findIndex(l => l.taskId === task.id);
   const entry = {
-    taskId:task.id, task:task.name,
-    note, time:timeStr, duration:swTotalToday,
+    taskId:   task.id,
+    task:     task.name,
+    note,
+    time:     timeStr,
+    duration: swTotalToday,
   };
   if (idx >= 0) logs[today][idx] = entry;
   else          logs[today].push(entry);
@@ -929,9 +893,9 @@ async function completeTask(task, note) {
   setSyncState('syncing');
   try {
     await apiPost('complete-task', {
-      date_key:  today,
-      task_id:   task.id,
-      task_name: task.name,
+      date_key:         today,
+      task_id:          task.id,
+      task_name:        task.name,
       note,
       duration_seconds: swTotalToday,
     });
@@ -942,7 +906,7 @@ async function completeTask(task, note) {
 }
 
 /* ═══════════════════════════════════════════
-   DAY COMPLETION
+   DAY COMPLETION CHECK
 ═══════════════════════════════════════════ */
 async function checkAllComplete() {
   if (getCompletedCount() !== TASKS.length) return;
@@ -980,41 +944,44 @@ async function checkAllComplete() {
 
 /* ═══════════════════════════════════════════
    STOPWATCH
+   - Continuous day counter (never resets on refresh)
+   - Always loads paused, user explicitly unpauses
+   - Resets only at midnight
+   - Saves "You worked Xh Ym" to logs at midnight
 ═══════════════════════════════════════════ */
-function startSw() {
+function unpauseSw() {
   if (swRunning) return;
   swRunning = true;
-  swElapsed = 0;
+
   const btn = document.getElementById('sw-btn');
-  btn.textContent = '■ Stop';
-  btn.className   = 'sw-btn stop';
+  btn.textContent = '⏸ Pause';
+  btn.className   = 'sw-btn pause';
   document.getElementById('sw-display').classList.add('running');
 
   swInterval = setInterval(() => {
-    swElapsed++;
     swTotalToday++;
     saveSwLocal();
     updateSwUI();
-    // sync every 30s
     if (swTotalToday - swLastSaved >= 30) syncSwToCloud();
   }, 1000);
 }
 
-function stopSw() {
+function pauseSw() {
   if (!swRunning) return;
   clearInterval(swInterval);
   swInterval = null;
   swRunning  = false;
+
   const btn = document.getElementById('sw-btn');
-  btn.textContent = '▶ Start';
-  btn.className   = 'sw-btn start';
+  btn.textContent = '▶ Unpause';
+  btn.className   = 'sw-btn unpause';
   document.getElementById('sw-display').classList.remove('running');
+
   syncSwToCloud();
 }
 
 function updateSwUI() {
-  document.getElementById('sw-display').textContent  = formatTime(swElapsed);
-  document.getElementById('sw-total-val').textContent = formatTime(swTotalToday);
+  document.getElementById('sw-display').textContent = formatTime(swTotalToday);
 }
 
 async function syncSwToCloud() {
@@ -1032,8 +999,13 @@ async function syncSwToCloud() {
   }
 }
 
+// Auto-pause and save when tab closes or refreshes
+window.addEventListener('beforeunload', () => {
+  if (swRunning) pauseSw();
+});
+
 document.getElementById('sw-btn').addEventListener('click', () => {
-  swRunning ? stopSw() : startSw();
+  swRunning ? pauseSw() : unpauseSw();
 });
 
 /* ═══════════════════════════════════════════
@@ -1051,8 +1023,8 @@ function updateCountdown() {
   el.className   = 'reset-time' +
     (secs < 3600 ? ' urgent' : secs < 10800 ? ' warning' : '');
 
-  const color = secs < 3600   ? 'var(--red)'
-              : secs < 10800  ? 'var(--yellow)'
+  const color = secs < 3600  ? 'var(--red)'
+              : secs < 10800 ? 'var(--yellow)'
               : 'var(--accent)';
   fill.style.width      = pct + '%';
   fill.style.background = color;
@@ -1060,24 +1032,76 @@ function updateCountdown() {
 
 /* ═══════════════════════════════════════════
    MIDNIGHT RESET
+   1. Pause stopwatch
+   2. Save final total to cloud
+   3. Write "You worked Xh Ym today" to logs  ← NEW
+   4. Reset stopwatch to 0 for new day
+   5. Reset task state
+   6. Reload everything
 ═══════════════════════════════════════════ */
 function scheduleMidnightReset() {
   const ms = secsUntilMidnight() * 1000 + 500;
   setTimeout(async () => {
-    stopSw();
-    swElapsed = 0; swTotalToday = 0;
-    saveSwLocal(); updateSwUI();
 
+    // 1. Pause if running
+    if (swRunning) pauseSw();
+
+    // 2. Capture yesterday's date and total BEFORE reset
+    const yesterdayKey   = todayKey(); // still "yesterday" at this moment
+    const finalSeconds   = swTotalToday;
+
+    // 3. Save final stopwatch total to cloud
+    if (finalSeconds > 0) {
+      try {
+        await apiPost('save-stopwatch', {
+          date_key:      yesterdayKey,
+          total_seconds: finalSeconds,
+        });
+      } catch(e) { console.warn('Final SW sync fail', e); }
+    }
+
+    // 4. Write human-readable daily hours entry to logs
+    if (finalSeconds > 0) {
+      const humanLabel = formatHumanTime(finalSeconds);
+      if (!logs[yesterdayKey]) logs[yesterdayKey] = [];
+
+      const hoursEntry = {
+        taskId:   '_daily_hours',
+        task:     '⏱ Daily Work Total',
+        note:     `You worked ${humanLabel} today.`,
+        time:     '23:59',
+        duration: finalSeconds,
+      };
+
+      const idx = logs[yesterdayKey].findIndex(e => e.taskId === '_daily_hours');
+      if (idx >= 0) logs[yesterdayKey][idx] = hoursEntry;
+      else          logs[yesterdayKey].push(hoursEntry);
+      LS.save('logs', logs);
+    }
+
+    // 5. Reset stopwatch for new day
+    swTotalToday = 0;
+    swLastSaved  = 0;
+    saveSwLocal();
+    updateSwUI();
+
+    // 6. Reset task state for new day
     state = { _date: todayKey() };
     LS.save('state', state);
+
+    // 7. Reload everything fresh from cloud
     await loadAll();
     renderTaskList();
     updateProgress();
     updateStreakChip();
     updateCountdown();
     renderCalendar();
+    updateCalendarStats();
     renderLogs();
-    showToast('🌅 New day — everything reset!');
+
+    showToast('🌅 New day — stopwatch reset!');
+
+    // Schedule next midnight
     scheduleMidnightReset();
   }, ms);
 }
@@ -1107,9 +1131,9 @@ function renderTaskList() {
   TASKS.forEach(task => {
     const ts        = state[task.id] || {};
     const completed = !!ts.completed;
-    const card = document.createElement('div');
-    card.className = `task-card ${completed ? 'completed' : ''}`;
-    card.innerHTML = `
+    const card      = document.createElement('div');
+    card.className  = `task-card ${completed ? 'completed' : ''}`;
+    card.innerHTML  = `
       <div class="task-check">
         <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
           <path d="M1 5L4.5 8.5L11 1" stroke="#0a0a0f" stroke-width="2.2"
@@ -1168,9 +1192,9 @@ function updateStreakChip() {
    CALENDAR STATS
 ═══════════════════════════════════════════ */
 function updateCalendarStats() {
-  const cur = streakData.current || 0;
-  const best= streakData.best    || 0;
-  const tot = Object.values(history).filter(v => v === true).length;
+  const cur  = streakData.current || 0;
+  const best = streakData.best    || 0;
+  const tot  = Object.values(history).filter(v => v === true).length;
   document.getElementById('stat-streak').textContent = cur;
   document.getElementById('stat-best').textContent   = best;
   document.getElementById('stat-total').textContent  = tot;
@@ -1206,15 +1230,23 @@ function renderCalendar() {
     el.className = 'cal-cell empty';
     grid.appendChild(el);
   }
+
   for (let d = 1; d <= daysInMonth; d++) {
     const ds   = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const cell = document.createElement('div');
-    cell.className = 'cal-cell';
+    cell.className   = 'cal-cell';
     cell.textContent = d;
-    if      (ds === todayStr)            cell.classList.add('today');
-    else if (history[ds] === true)       cell.classList.add('streak-day');
-    else if (history[ds] === false)      cell.classList.add('missed-day');
-    else if (new Date(year,month,d) > today) cell.classList.add('future-day');
+
+    if (ds === todayStr) {
+      cell.classList.add('today');
+    } else if (history[ds] === true) {
+      cell.classList.add('streak-day');
+    } else if (new Date(year,month,d) < today && ds !== todayStr && history[ds] !== true) {
+      cell.classList.add('missed-day');
+    } else if (new Date(year,month,d) > today) {
+      cell.classList.add('future-day');
+    }
+
     grid.appendChild(cell);
   }
 }
@@ -1228,10 +1260,13 @@ document.getElementById('cal-next').addEventListener('click', () => {
 
 /* ═══════════════════════════════════════════
    LOGS
+   Hours entry (_daily_hours) renders first
+   with special yellow styling
 ═══════════════════════════════════════════ */
 function renderLogs() {
   const section = document.getElementById('logs-section');
   const dates   = Object.keys(logs).sort((a,b) => b.localeCompare(a));
+
   if (!dates.length) {
     section.innerHTML = `
       <div class="empty-state">
@@ -1240,10 +1275,12 @@ function renderLogs() {
       </div>`;
     return;
   }
+
   section.innerHTML = '';
   dates.forEach(date => {
     const entries = logs[date];
     if (!entries?.length) return;
+
     const group = document.createElement('div');
     group.className = 'log-date-group';
     const d = new Date(date+'T00:00:00');
@@ -1252,22 +1289,32 @@ function renderLogs() {
         weekday:'long',year:'numeric',month:'long',day:'numeric'
       })
     }</div>`;
-    entries.forEach(entry => {
+
+    // Sort: hours entry first, then rest by time
+    const sorted = [...entries].sort((a,b) => {
+      if (a.taskId === '_daily_hours') return -1;
+      if (b.taskId === '_daily_hours') return  1;
+      return 0;
+    });
+
+    sorted.forEach(entry => {
+      const isHoursEntry = entry.taskId === '_daily_hours';
       const el = document.createElement('div');
-      el.className = 'log-entry';
+      el.className = `log-entry${isHoursEntry ? ' hours-entry' : ''}`;
       el.innerHTML = `
         <div class="log-entry-task">${entry.task}</div>
         <div class="log-entry-note">${entry.note ||
           '<em style="color:var(--text-3)">No note recorded.</em>'}</div>
         <div class="log-entry-meta">
           <span class="log-entry-time">${entry.time}</span>
-          ${entry.duration > 0
+          ${!isHoursEntry && entry.duration > 0
             ? `<span class="log-entry-dur">⏱ ${formatTime(entry.duration)} worked today</span>`
             : ''}
         </div>
       `;
       group.appendChild(el);
     });
+
     section.appendChild(group);
   });
 }
@@ -1283,8 +1330,8 @@ function openModal(task) {
   document.getElementById('modal-subtitle').textContent = ts.completed
     ? 'Update your reflection.'
     : 'What did you learn or accomplish today?';
-  document.getElementById('modal-textarea').value       = ts.note || '';
-  document.getElementById('modal-confirm').textContent  = ts.completed
+  document.getElementById('modal-textarea').value      = ts.note || '';
+  document.getElementById('modal-confirm').textContent = ts.completed
     ? '✓ Update' : '✓ Mark Complete';
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(() => document.getElementById('modal-textarea').focus(), 220);
