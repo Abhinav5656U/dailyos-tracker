@@ -59,15 +59,14 @@
       transition:background var(--transition),color var(--transition);
     }
     button{cursor:pointer;border:none;background:none;font-family:inherit}
-    input,textarea{font-family:inherit}
+    input,textarea,select{font-family:inherit}
 
-    .app-shell{
-      width:100%;max-width:100%;margin:0 auto;padding:0 16px;
-    }
-    @media(min-width:900px){ .app-shell{ padding:0 60px; } }
-    @media(min-width:1200px){ .app-shell{ padding:0 120px; } }
-    @media(min-width:1600px){ .app-shell{ padding:0 200px; } }
+    .app-shell{width:100%;max-width:100%;margin:0 auto;padding:0 16px;}
+    @media(min-width:900px){.app-shell{padding:0 60px;}}
+    @media(min-width:1200px){.app-shell{padding:0 120px;}}
+    @media(min-width:1600px){.app-shell{padding:0 200px;}}
 
+    /* ── TOP BAR ── */
     .topbar{
       display:flex;align-items:center;justify-content:space-between;
       padding:16px 0 14px;border-bottom:1px solid var(--border);
@@ -113,6 +112,7 @@
     }
     .icon-btn:hover{background:var(--bg-3);color:var(--text-0);border-color:var(--border-hi)}
 
+    /* ── RESET COUNTDOWN ── */
     .reset-bar{
       display:flex;align-items:center;gap:12px;
       background:var(--bg-1);border:1px solid var(--border);
@@ -139,51 +139,7 @@
     }
     .tasks-left-badge b{color:var(--accent)}
 
-    .sw-card{
-      background:var(--bg-1);border:1px solid var(--border);
-      border-radius:var(--radius);padding:16px;margin-top:12px;
-    }
-    .sw-card-header{
-      display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;
-    }
-    .sw-card-title{
-      font-size:0.7rem;font-weight:600;text-transform:uppercase;
-      letter-spacing:0.08em;color:var(--text-2);
-      font-family:'JetBrains Mono',monospace;
-    }
-    .sw-sync-badge{
-      font-size:0.62rem;color:var(--text-3);
-      font-family:'JetBrains Mono',monospace;
-      display:flex;align-items:center;gap:4px;
-    }
-    .sw-sync-badge .dot{
-      width:5px;height:5px;border-radius:50%;
-      background:var(--text-3);display:inline-block;
-    }
-    .sw-sync-badge.synced .dot{background:var(--green)}
-    .sw-sync-badge.synced{color:var(--green)}
-    .sw-body{display:flex;align-items:center;gap:14px;}
-    .sw-time-display{
-      font-family:'JetBrains Mono',monospace;
-      font-size:2.6rem;font-weight:700;
-      color:var(--text-0);letter-spacing:0.04em;flex:1;
-    }
-    .sw-time-display.running{color:var(--yellow)}
-    .sw-controls{display:flex;gap:8px}
-    .sw-btn{
-      padding:10px 24px;border-radius:var(--radius-sm);
-      font-size:0.85rem;font-weight:700;
-      font-family:'JetBrains Mono',monospace;
-      border:1px solid;transition:all var(--transition);letter-spacing:0.04em;
-    }
-    .sw-btn.unpause{
-      border-color:var(--green);color:var(--green);background:var(--green-glow);
-    }
-    .sw-btn.pause{
-      border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,0.08);
-    }
-    .sw-btn:hover{opacity:0.8}
-
+    /* ── TABS ── */
     .tabs{
       display:flex;gap:4px;background:var(--bg-1);
       border:1px solid var(--border);border-radius:var(--radius);
@@ -200,6 +156,7 @@
     }
     .tab-btn:hover:not(.active){color:var(--text-1)}
 
+    /* ── STREAK BANNER ── */
     .streak-banner{
       background:var(--bg-2);border:1px solid var(--yellow);
       border-radius:var(--radius);padding:12px 14px;
@@ -215,6 +172,7 @@
     }
     .banner-close:hover{color:var(--text-1)}
 
+    /* ── PROGRESS ── */
     .progress-section{padding:0 0 12px}
     .progress-header{
       display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
@@ -239,11 +197,12 @@
       box-shadow:0 0 6px var(--accent);
     }
 
+    /* ── TASK LIST ── */
     .task-list{display:flex;flex-direction:column;gap:6px;padding-bottom:40px}
     .task-card{
       background:var(--bg-1);border:1px solid var(--border);
       border-radius:var(--radius);display:flex;align-items:center;
-      padding:14px 14px;gap:12px;
+      padding:14px;gap:12px;
       transition:all var(--transition);position:relative;overflow:hidden;
     }
     .task-card::before{
@@ -254,7 +213,6 @@
     .task-card:hover::before{opacity:0.6}
     .task-card.completed{border-color:var(--green-dim);background:var(--green-glow)}
     .task-card.completed::before{background:var(--green);opacity:1}
-
     .task-check{
       width:22px;height:22px;border-radius:50%;border:2px solid var(--border-hi);
       flex-shrink:0;display:flex;align-items:center;justify-content:center;
@@ -263,7 +221,6 @@
     .task-card.completed .task-check{background:var(--green);border-color:var(--green)}
     .task-check svg{display:none}
     .task-card.completed .task-check svg{display:block}
-
     .task-info{flex:1;min-width:0}
     .task-name-row{display:flex;align-items:center;gap:6px}
     .task-name{
@@ -280,9 +237,7 @@
       border-radius:4px;transition:all var(--transition);flex-shrink:0;
     }
     .task-edit-btn:hover{color:var(--accent);background:var(--accent-glow)}
-    .task-meta{
-      display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap;
-    }
+    .task-meta{display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap;}
     .task-tag{
       font-size:0.65rem;font-family:'JetBrains Mono',monospace;
       color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;
@@ -303,13 +258,12 @@
       background:var(--bg-3);transition:all var(--transition);
       white-space:nowrap;flex-shrink:0;
     }
-    .complete-btn:hover{
-      border-color:var(--accent);color:var(--accent);background:var(--accent-glow);
-    }
+    .complete-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow);}
     .task-card.completed .complete-btn{
       border-color:var(--green-dim);color:var(--green);background:var(--green-glow);
     }
 
+    /* ── CALENDAR ── */
     .calendar-wrap{padding-bottom:40px}
     .cal-stats-row{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;
@@ -338,7 +292,7 @@
       font-family:'JetBrains Mono',monospace;font-weight:700;
       font-size:0.95rem;color:var(--text-0);
     }
-    .cal-nav{display:flex;gap:6px}
+    .cal-nav{display:flex;gap:6px;}
     .cal-nav-btn{
       width:30px;height:30px;border-radius:var(--radius-sm);
       background:var(--bg-2);border:1px solid var(--border);
@@ -346,7 +300,7 @@
       display:flex;align-items:center;justify-content:center;
       transition:all var(--transition);
     }
-    .cal-nav-btn:hover{background:var(--bg-3);border-color:var(--border-hi)}
+    .cal-nav-btn:hover{background:var(--bg-3);border-color:var(--border-hi);}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
     .cal-day-name{
       text-align:center;padding:6px 0;
@@ -360,23 +314,90 @@
       color:var(--text-2);background:var(--bg-2);border:1px solid var(--border);
       position:relative;transition:all var(--transition);
     }
-    .cal-cell.empty{background:transparent;border-color:transparent}
-    .cal-cell.today{border-color:var(--accent);color:var(--accent);font-weight:700}
-    .cal-cell.streak-day{
-      background:var(--green-glow);border-color:var(--green-dim);color:var(--green);
-    }
+    .cal-cell.empty{background:transparent;border-color:transparent;}
+    .cal-cell.today{border-color:var(--accent);color:var(--accent);font-weight:700;}
+    .cal-cell.streak-day{background:var(--green-glow);border-color:var(--green-dim);color:var(--green);}
     .cal-cell.streak-day::after{
       content:'';position:absolute;bottom:3px;
       width:4px;height:4px;background:var(--green);border-radius:50%;
     }
     .cal-cell.missed-day{
-      background:rgba(255,95,109,0.05);
-      border-color:rgba(255,95,109,0.2);color:var(--text-3);
+      background:rgba(255,95,109,0.05);border-color:rgba(255,95,109,0.2);color:var(--text-3);
     }
-    .cal-cell.future-day{opacity:0.3}
+    .cal-cell.future-day{opacity:0.3;}
 
-    .logs-wrap{padding-bottom:40px}
-    .log-date-group{margin-bottom:20px}
+    /* ── LOGS TAB ── */
+    .logs-wrap{padding-bottom:40px;}
+
+    /* Daily note banner — sits at top of logs tab */
+    .daily-note-bar{
+      background:var(--bg-1);border:1px solid var(--border);
+      border-radius:var(--radius);padding:14px 16px;
+      margin-bottom:14px;
+    }
+    .daily-note-bar-top{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;
+    }
+    .daily-note-bar-label{
+      font-size:0.7rem;font-weight:600;text-transform:uppercase;
+      letter-spacing:0.08em;color:var(--text-2);
+      font-family:'JetBrains Mono',monospace;
+    }
+    .daily-note-bar-right{display:flex;align-items:center;gap:8px;}
+    .daily-note-saved-badge{
+      font-size:0.62rem;font-family:'JetBrains Mono',monospace;
+      color:var(--green);display:none;
+    }
+    .daily-note-saved-badge.show{display:inline;}
+    .daily-note-add-btn{
+      padding:5px 14px;border-radius:var(--radius-sm);
+      font-size:0.73rem;font-weight:700;
+      font-family:'JetBrains Mono',monospace;
+      border:1px solid var(--accent);color:var(--accent);
+      background:var(--accent-glow);transition:all var(--transition);
+    }
+    .daily-note-add-btn:hover{opacity:0.8;}
+
+    /* preview of saved note */
+    .daily-note-preview-text{
+      font-size:0.82rem;color:var(--text-1);line-height:1.6;
+      margin-top:10px;white-space:pre-wrap;
+      display:none;
+    }
+    .daily-note-preview-text.show{display:block;}
+
+    /* inline edit area */
+    .daily-note-edit-area{
+      margin-top:12px;display:none;flex-direction:column;gap:10px;
+    }
+    .daily-note-edit-area.open{display:flex;}
+    .daily-note-textarea{
+      width:100%;background:var(--bg-0);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-0);
+      font-size:0.875rem;resize:none;min-height:90px;outline:none;
+      transition:border-color var(--transition);line-height:1.6;
+    }
+    .daily-note-textarea::placeholder{color:var(--text-3);}
+    .daily-note-textarea:focus{border-color:var(--accent);}
+    .daily-note-edit-actions{display:flex;gap:8px;}
+    .daily-note-save-btn{
+      padding:8px 20px;border-radius:var(--radius-sm);
+      background:var(--accent);color:#fff;font-weight:700;
+      font-size:0.78rem;font-family:'JetBrains Mono',monospace;
+      border:1px solid transparent;transition:all var(--transition);
+    }
+    .daily-note-save-btn:hover{opacity:0.88;}
+    .daily-note-cancel-btn{
+      padding:8px 14px;border-radius:var(--radius-sm);
+      border:1px solid var(--border);color:var(--text-2);font-weight:600;
+      font-size:0.78rem;font-family:'JetBrains Mono',monospace;
+      background:var(--bg-3);transition:all var(--transition);
+    }
+    .daily-note-cancel-btn:hover{border-color:var(--border-hi);color:var(--text-0);}
+
+    /* log entries */
+    .log-date-group{margin-bottom:20px;}
     .log-date-header{
       font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-3);
       text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;
@@ -386,74 +407,89 @@
       background:var(--bg-1);border:1px solid var(--border);
       border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px;
     }
-    .log-entry.hours-entry{
-      border-color:rgba(245,197,24,0.25);background:rgba(245,197,24,0.04);
+    .log-entry.note-entry{
+      border-color:rgba(124,111,255,0.3);background:rgba(124,111,255,0.04);
     }
     .log-entry-task{
       font-size:0.8rem;font-weight:600;color:var(--accent);
       margin-bottom:4px;font-family:'JetBrains Mono',monospace;
     }
-    .log-entry.hours-entry .log-entry-task{color:var(--yellow)}
-    .log-entry-note{font-size:0.82rem;color:var(--text-1);line-height:1.5}
-    .log-entry-meta{display:flex;gap:10px;margin-top:6px;align-items:center}
-    .log-entry-time{font-size:0.63rem;color:var(--text-3);font-family:'JetBrains Mono',monospace}
-    .log-entry-dur{font-size:0.63rem;color:var(--yellow);font-family:'JetBrains Mono',monospace}
+    .log-entry.note-entry .log-entry-task{color:var(--accent);}
+    .log-entry-note{font-size:0.82rem;color:var(--text-1);line-height:1.6;white-space:pre-wrap;}
+    .log-entry-meta{display:flex;gap:10px;margin-top:6px;align-items:center;flex-wrap:wrap;}
+    .log-entry-time{font-size:0.63rem;color:var(--text-3);font-family:'JetBrains Mono',monospace;}
 
-    .empty-state{text-align:center;padding:48px 20px;color:var(--text-3)}
-    .empty-state-icon{font-size:2.2rem;margin-bottom:10px}
-    .empty-state p{font-size:0.82rem;line-height:1.6}
+    .empty-state{text-align:center;padding:48px 20px;color:var(--text-3);}
+    .empty-state-icon{font-size:2.2rem;margin-bottom:10px;}
+    .empty-state p{font-size:0.82rem;line-height:1.6;}
 
+    /* ── MODALS ── */
     .modal-overlay{
       position:fixed;inset:0;background:rgba(0,0,0,0.78);
       backdrop-filter:blur(8px);z-index:100;
       display:flex;align-items:center;justify-content:center;padding:20px;
       opacity:0;pointer-events:none;transition:opacity 200ms ease;
     }
-    .modal-overlay.open{opacity:1;pointer-events:all}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
     .modal{
       background:var(--bg-1);border:1px solid var(--border-hi);
       border-radius:16px;width:100%;max-width:480px;padding:26px 24px;
       transform:translateY(14px) scale(0.98);
       transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1);
     }
-    .modal-overlay.open .modal{transform:translateY(0) scale(1)}
+    .modal-overlay.open .modal{transform:translateY(0) scale(1);}
     .modal-tag{
       font-family:'JetBrains Mono',monospace;font-size:0.65rem;
       color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;
     }
-    .modal-title{font-size:1.1rem;font-weight:700;color:var(--text-0);margin-bottom:5px}
-    .modal-subtitle{font-size:0.8rem;color:var(--text-2);margin-bottom:16px;line-height:1.5}
+    .modal-title{font-size:1.1rem;font-weight:700;color:var(--text-0);margin-bottom:5px;}
+    .modal-subtitle{font-size:0.8rem;color:var(--text-2);margin-bottom:16px;line-height:1.5;}
     .modal-textarea{
       width:100%;background:var(--bg-0);border:1px solid var(--border);
       border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-0);
       font-size:0.875rem;resize:none;min-height:110px;outline:none;
       transition:border-color var(--transition);line-height:1.6;
     }
-    .modal-textarea::placeholder{color:var(--text-3)}
-    .modal-textarea:focus{border-color:var(--accent)}
+    .modal-textarea::placeholder{color:var(--text-3);}
+    .modal-textarea:focus{border-color:var(--accent);}
+    .modal-field-label{
+      font-size:0.65rem;font-family:'JetBrains Mono',monospace;
+      color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;
+      margin-bottom:5px;display:block;margin-top:12px;
+    }
     .modal-input{
       width:100%;background:var(--bg-0);border:1px solid var(--border);
       border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-0);
       font-size:0.95rem;outline:none;transition:border-color var(--transition);
     }
-    .modal-input:focus{border-color:var(--accent)}
-    .modal-actions{display:flex;gap:10px;margin-top:16px}
+    .modal-input:focus{border-color:var(--accent);}
+    .modal-select{
+      width:100%;background:var(--bg-0);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-0);
+      font-size:0.88rem;outline:none;transition:border-color var(--transition);
+      cursor:pointer;appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e6e8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;
+    }
+    .modal-select:focus{border-color:var(--accent);}
+    .modal-actions{display:flex;gap:10px;margin-top:16px;}
     .btn-secondary{
       flex:1;padding:10px;border-radius:var(--radius-sm);
       border:1px solid var(--border);color:var(--text-2);font-weight:600;
       font-size:0.82rem;font-family:'JetBrains Mono',monospace;
       background:var(--bg-3);transition:all var(--transition);
     }
-    .btn-secondary:hover{border-color:var(--border-hi);color:var(--text-0)}
+    .btn-secondary:hover{border-color:var(--border-hi);color:var(--text-0);}
     .btn-primary{
       flex:2;padding:10px;border-radius:var(--radius-sm);
       background:var(--accent);color:#fff;font-weight:700;
       font-size:0.82rem;font-family:'JetBrains Mono',monospace;
       border:1px solid transparent;transition:all var(--transition);letter-spacing:0.04em;
     }
-    .btn-primary:hover{opacity:0.88}
-    .btn-primary:active{transform:scale(0.98)}
+    .btn-primary:hover{opacity:0.88;}
+    .btn-primary:active{transform:scale(0.98);}
 
+    /* ── TOAST ── */
     .toast-container{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
       z-index:200;display:flex;flex-direction:column;gap:8px;
@@ -470,14 +506,15 @@
     @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     @keyframes toastOut{from{opacity:1}to{opacity:0}}
 
-    ::-webkit-scrollbar{width:4px}
-    ::-webkit-scrollbar-track{background:var(--bg-0)}
-    ::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:99px}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--bg-0);}
+    ::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:99px;}
   </style>
 </head>
 <body>
 <div class="app-shell">
 
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="topbar-left">
       <div class="logo">
@@ -498,6 +535,7 @@
     </div>
   </header>
 
+  <!-- RESET COUNTDOWN -->
   <div class="reset-bar">
     <span class="reset-label">Resets in</span>
     <span class="reset-time" id="reset-time">--:--:--</span>
@@ -506,32 +544,17 @@
         <div class="reset-fill" id="reset-fill" style="width:100%"></div>
       </div>
     </div>
-    <div class="tasks-left-badge">
-      <b id="tasks-left">10</b> left
-    </div>
+    <div class="tasks-left-badge"><b id="tasks-left">10</b> left</div>
   </div>
 
-  <div class="sw-card">
-    <div class="sw-card-header">
-      <span class="sw-card-title">⏱ Daily Stopwatch</span>
-      <span class="sw-sync-badge" id="sw-sync-badge">
-        <span class="dot"></span>local
-      </span>
-    </div>
-    <div class="sw-body">
-      <div class="sw-time-display" id="sw-display">00:00:00</div>
-      <div class="sw-controls">
-        <button class="sw-btn unpause" id="sw-btn">▶ Unpause</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- TABS -->
   <div class="tabs">
     <button class="tab-btn active" data-tab="tasks">Tasks</button>
     <button class="tab-btn" data-tab="calendar">Calendar</button>
     <button class="tab-btn" data-tab="logs">Logs</button>
   </div>
 
+  <!-- TAB: TASKS -->
   <div id="tab-tasks">
     <div class="streak-banner" id="streak-banner">
       <div class="streak-banner-icon">🏆</div>
@@ -555,6 +578,7 @@
     <div class="task-list" id="task-list"></div>
   </div>
 
+  <!-- TAB: CALENDAR -->
   <div id="tab-calendar" style="display:none">
     <div class="calendar-wrap">
       <div class="cal-stats-row">
@@ -584,7 +608,33 @@
     </div>
   </div>
 
+  <!-- TAB: LOGS -->
   <div id="tab-logs" style="display:none">
+
+    <!-- DAILY NOTE — one per day, extra note only -->
+    <div class="daily-note-bar">
+      <div class="daily-note-bar-top">
+        <span class="daily-note-bar-label">📝 Today's Note</span>
+        <div class="daily-note-bar-right">
+          <span class="daily-note-saved-badge" id="daily-note-saved-badge">✓ saved</span>
+          <button class="daily-note-add-btn" id="daily-note-add-btn">+ Add Note</button>
+        </div>
+      </div>
+      <!-- saved note preview -->
+      <div class="daily-note-preview-text" id="daily-note-preview-text"></div>
+      <!-- inline edit -->
+      <div class="daily-note-edit-area" id="daily-note-edit-area">
+        <textarea class="daily-note-textarea" id="daily-note-textarea"
+          placeholder="Write anything extra — hours worked on digital clock, side projects, random wins, anything…"
+          rows="4"></textarea>
+        <div class="daily-note-edit-actions">
+          <button class="daily-note-save-btn" id="daily-note-save-btn">✓ Save</button>
+          <button class="daily-note-cancel-btn" id="daily-note-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAST LOGS (task check-ins + past daily notes) -->
     <div class="logs-wrap" id="logs-section"></div>
   </div>
 
@@ -608,14 +658,29 @@
 <!-- RENAME MODAL -->
 <div class="modal-overlay" id="rename-overlay">
   <div class="modal">
-    <div class="modal-tag">Rename Task</div>
-    <div class="modal-title">Edit Task Name</div>
-    <div class="modal-subtitle">Change this task to something you're currently working on.</div>
+    <div class="modal-tag">Edit Task</div>
+    <div class="modal-title">Rename Task</div>
+    <div class="modal-subtitle">Update the name and pick a category.</div>
+    <label class="modal-field-label">Task Name</label>
     <input class="modal-input" id="rename-input" type="text"
       placeholder="New task name…" maxlength="60"/>
+    <label class="modal-field-label">Category</label>
+    <select class="modal-select" id="rename-category">
+      <option value="Career">Career</option>
+      <option value="Creative">Creative</option>
+      <option value="Tasks">Tasks</option>
+      <option value="Learning">Learning</option>
+      <option value="Dev">Dev</option>
+      <option value="Content">Content</option>
+      <option value="Business">Business</option>
+      <option value="Health">Health</option>
+      <option value="Finance">Finance</option>
+      <option value="Social">Social</option>
+      <option value="Other">Other</option>
+    </select>
     <div class="modal-actions">
       <button class="btn-secondary" id="rename-cancel">Cancel</button>
-      <button class="btn-primary" id="rename-confirm">Save Name</button>
+      <button class="btn-primary" id="rename-confirm">Save Changes</button>
     </div>
   </div>
 </div>
@@ -650,15 +715,10 @@ let state        = {};
 let streakData   = { current:0, best:0, lastDate:null };
 let history      = {};
 let logs         = {};
+let dailyNotes   = {}; // { [dateKey]: { note, time } }
 let pendingTask  = null;
 let renamingTask = null;
 let calViewDate  = new Date();
-
-// stopwatch
-let swTotalToday = 0;
-let swRunning    = false;
-let swInterval   = null;
-let swLastSaved  = 0;
 
 /* ═══════════════════════════════════════════
    HELPERS
@@ -681,19 +741,14 @@ function formatTime(sec) {
   const s = sec%60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-function formatHumanTime(sec) {
-  const h = Math.floor(sec/3600);
-  const m = Math.floor((sec%3600)/60);
-  if (h > 0 && m > 0) return `${h}h ${m}m`;
-  if (h > 0)          return `${h}h`;
-  if (m > 0)          return `${m}m`;
-  return '< 1m';
-}
 function secsUntilMidnight() {
   const now = new Date();
   const mid = new Date(now);
   mid.setHours(24,0,0,0);
   return Math.floor((mid-now)/1000);
+}
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 /* ═══════════════════════════════════════════
@@ -708,38 +763,20 @@ function loadTaskNamesLocal() {
   const saved = LS.load('tasknames', null);
   TASKS = DEFAULT_TASKS.map(dt => {
     const f = saved?.find(s => s.id === dt.id);
-    return { ...dt, name: f ? f.name : dt.name };
+    return { ...dt, name: f ? f.name : dt.name, tag: f?.tag || dt.tag };
   });
 }
 function saveTaskNamesLocal() {
-  LS.save('tasknames', TASKS.map(t => ({ id:t.id, name:t.name })));
+  LS.save('tasknames', TASKS.map(t => ({ id:t.id, name:t.name, tag:t.tag })));
 }
-
-function loadSwLocal() {
-  const date = LS.load('sw_date', '');
-  if (date === todayKey()) {
-    swTotalToday = LS.load('sw_total', 0);
-  } else {
-    swTotalToday = 0;
-    LS.save('sw_total', 0);
-    LS.save('sw_date', todayKey());
-  }
-  // Always start paused on page load — user explicitly unpauses
-  swRunning = false;
-}
-
-function saveSwLocal() {
-  LS.save('sw_total', swTotalToday);
-  LS.save('sw_date', todayKey());
-}
-
 function loadFromLocal() {
   const today = todayKey();
   const s = LS.load('state', { _date: today });
   state      = s._date === today ? s : { _date: today };
-  streakData = LS.load('streak',  { current:0, best:0, lastDate:null });
-  history    = LS.load('history', {});
-  logs       = LS.load('logs',    {});
+  streakData = LS.load('streak',      { current:0, best:0, lastDate:null });
+  history    = LS.load('history',     {});
+  logs       = LS.load('logs',        {});
+  dailyNotes = LS.load('dailynotes',  {});
 }
 
 /* ═══════════════════════════════════════════
@@ -775,13 +812,12 @@ async function loadAll() {
   setSyncState('syncing');
   try {
     const today = todayKey();
-    const [sRes, stRes, hRes, lRes, nRes, swRes] = await Promise.all([
+    const [sRes, stRes, hRes, lRes, nRes] = await Promise.all([
       apiGet('get-streak'),
-      apiGet('get-state',     { date_key: today }),
+      apiGet('get-state',    { date_key: today }),
       apiGet('get-history'),
       apiGet('get-logs'),
       apiGet('get-tasknames'),
-      apiGet('get-stopwatch', { date_key: today }),
     ]);
 
     if (sRes.success && sRes.data) {
@@ -823,7 +859,6 @@ async function loadAll() {
           taskId:   row.task_id,
           task:     row.task_name,
           note:     row.note,
-          duration: row.duration_seconds || 0,
           time:     row.logged_at
             ? new Date(row.logged_at)
                 .toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})
@@ -838,19 +873,12 @@ async function loadAll() {
     if (nRes.success && nRes.data && nRes.data.length > 0) {
       nRes.data.forEach(row => {
         const t = TASKS.find(x => x.id === row.task_id);
-        if (t) t.name = row.task_name;
+        if (t) {
+          t.name = row.task_name;
+          if (row.tag) t.tag = row.tag;
+        }
       });
       saveTaskNamesLocal();
-    }
-
-    if (swRes.success && swRes.data) {
-      const cloudTotal = swRes.data.total_seconds || 0;
-      if (cloudTotal > swTotalToday) {
-        swTotalToday = cloudTotal;
-        saveSwLocal();
-      }
-      swLastSaved = swTotalToday;
-      updateSwUI();
     }
 
     setSyncState('synced');
@@ -863,7 +891,7 @@ async function loadAll() {
 }
 
 /* ═══════════════════════════════════════════
-   COMPLETE TASK
+   COMPLETE TASK — unchanged from original
 ═══════════════════════════════════════════ */
 async function completeTask(task, note) {
   const today   = todayKey();
@@ -874,13 +902,7 @@ async function completeTask(task, note) {
 
   if (!logs[today]) logs[today] = [];
   const idx   = logs[today].findIndex(l => l.taskId === task.id);
-  const entry = {
-    taskId:   task.id,
-    task:     task.name,
-    note,
-    time:     timeStr,
-    duration: swTotalToday,
-  };
+  const entry = { taskId:task.id, task:task.name, note, time:timeStr };
   if (idx >= 0) logs[today][idx] = entry;
   else          logs[today].push(entry);
   LS.save('logs', logs);
@@ -897,16 +919,14 @@ async function completeTask(task, note) {
       task_id:          task.id,
       task_name:        task.name,
       note,
-      duration_seconds: swTotalToday,
+      duration_seconds: 0,
     });
     setSyncState('synced');
-  } catch(err) {
-    setSyncState('error');
-  }
+  } catch(err) { setSyncState('error'); }
 }
 
 /* ═══════════════════════════════════════════
-   DAY COMPLETION CHECK
+   DAY COMPLETION
 ═══════════════════════════════════════════ */
 async function checkAllComplete() {
   if (getCompletedCount() !== TASKS.length) return;
@@ -943,70 +963,59 @@ async function checkAllComplete() {
 }
 
 /* ═══════════════════════════════════════════
-   STOPWATCH
-   - Continuous day counter (never resets on refresh)
-   - Always loads paused, user explicitly unpauses
-   - Resets only at midnight
-   - Saves "You worked Xh Ym" to logs at midnight
+   DAILY NOTE — one extra note per day
+   stored only in localStorage (simple, no new endpoint needed)
 ═══════════════════════════════════════════ */
-function unpauseSw() {
-  if (swRunning) return;
-  swRunning = true;
+function renderDailyNoteBar() {
+  const today   = todayKey();
+  const entry   = dailyNotes[today] || null;
+  const badge   = document.getElementById('daily-note-saved-badge');
+  const preview = document.getElementById('daily-note-preview-text');
+  const addBtn  = document.getElementById('daily-note-add-btn');
 
-  const btn = document.getElementById('sw-btn');
-  btn.textContent = '⏸ Pause';
-  btn.className   = 'sw-btn pause';
-  document.getElementById('sw-display').classList.add('running');
-
-  swInterval = setInterval(() => {
-    swTotalToday++;
-    saveSwLocal();
-    updateSwUI();
-    if (swTotalToday - swLastSaved >= 30) syncSwToCloud();
-  }, 1000);
-}
-
-function pauseSw() {
-  if (!swRunning) return;
-  clearInterval(swInterval);
-  swInterval = null;
-  swRunning  = false;
-
-  const btn = document.getElementById('sw-btn');
-  btn.textContent = '▶ Unpause';
-  btn.className   = 'sw-btn unpause';
-  document.getElementById('sw-display').classList.remove('running');
-
-  syncSwToCloud();
-}
-
-function updateSwUI() {
-  document.getElementById('sw-display').textContent = formatTime(swTotalToday);
-}
-
-async function syncSwToCloud() {
-  try {
-    await apiPost('save-stopwatch', {
-      date_key:      todayKey(),
-      total_seconds: swTotalToday,
-    });
-    swLastSaved = swTotalToday;
-    const badge = document.getElementById('sw-sync-badge');
-    badge.innerHTML = '<span class="dot"></span>synced';
-    badge.className = 'sw-sync-badge synced';
-  } catch(err) {
-    console.warn('SW sync fail:', err);
+  if (entry && entry.note) {
+    badge.classList.add('show');
+    preview.classList.add('show');
+    preview.textContent = entry.note;
+    addBtn.textContent  = '✎ Edit Note';
+  } else {
+    badge.classList.remove('show');
+    preview.classList.remove('show');
+    preview.textContent = '';
+    addBtn.textContent  = '+ Add Note';
   }
+  // close edit area
+  document.getElementById('daily-note-edit-area').classList.remove('open');
 }
 
-// Auto-pause and save when tab closes or refreshes
-window.addEventListener('beforeunload', () => {
-  if (swRunning) pauseSw();
-});
+function openDailyNoteEdit() {
+  const today = todayKey();
+  const entry = dailyNotes[today] || {};
+  document.getElementById('daily-note-textarea').value = entry.note || '';
+  document.getElementById('daily-note-edit-area').classList.add('open');
+  document.getElementById('daily-note-textarea').focus();
+}
 
-document.getElementById('sw-btn').addEventListener('click', () => {
-  swRunning ? pauseSw() : unpauseSw();
-});
+function closeDailyNoteEdit() {
+  document.getElementById('daily-note-edit-area').classList.remove('open');
+}
+
+function saveDailyNote() {
+  const today = todayKey();
+  const note  = document.getElementById('daily-note-textarea').value.trim();
+  if (!note) { showToast('⚠ Note is empty'); return; }
+
+  const timeStr = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  dailyNotes[today] = { note, time: timeStr };
+  LS.save('dailynotes', dailyNotes);
+
+  renderDailyNoteBar();
+  showToast('✓ Note saved');
+}
+
+document.getElementById('daily-note-add-btn').addEventListener('click', openDailyNoteEdit);
+document.getElementById('daily-note-save-btn').addEventListener('click', saveDailyNote);
+document.getElementById('daily-note-cancel-btn').addEventListener('click', closeDailyNoteEdit);
 
 /* ═══════════════════════════════════════════
    COUNTDOWN
@@ -1032,64 +1041,12 @@ function updateCountdown() {
 
 /* ═══════════════════════════════════════════
    MIDNIGHT RESET
-   1. Pause stopwatch
-   2. Save final total to cloud
-   3. Write "You worked Xh Ym today" to logs  ← NEW
-   4. Reset stopwatch to 0 for new day
-   5. Reset task state
-   6. Reload everything
 ═══════════════════════════════════════════ */
 function scheduleMidnightReset() {
   const ms = secsUntilMidnight() * 1000 + 500;
   setTimeout(async () => {
-
-    // 1. Pause if running
-    if (swRunning) pauseSw();
-
-    // 2. Capture yesterday's date and total BEFORE reset
-    const yesterdayKey   = todayKey(); // still "yesterday" at this moment
-    const finalSeconds   = swTotalToday;
-
-    // 3. Save final stopwatch total to cloud
-    if (finalSeconds > 0) {
-      try {
-        await apiPost('save-stopwatch', {
-          date_key:      yesterdayKey,
-          total_seconds: finalSeconds,
-        });
-      } catch(e) { console.warn('Final SW sync fail', e); }
-    }
-
-    // 4. Write human-readable daily hours entry to logs
-    if (finalSeconds > 0) {
-      const humanLabel = formatHumanTime(finalSeconds);
-      if (!logs[yesterdayKey]) logs[yesterdayKey] = [];
-
-      const hoursEntry = {
-        taskId:   '_daily_hours',
-        task:     '⏱ Daily Work Total',
-        note:     `You worked ${humanLabel} today.`,
-        time:     '23:59',
-        duration: finalSeconds,
-      };
-
-      const idx = logs[yesterdayKey].findIndex(e => e.taskId === '_daily_hours');
-      if (idx >= 0) logs[yesterdayKey][idx] = hoursEntry;
-      else          logs[yesterdayKey].push(hoursEntry);
-      LS.save('logs', logs);
-    }
-
-    // 5. Reset stopwatch for new day
-    swTotalToday = 0;
-    swLastSaved  = 0;
-    saveSwLocal();
-    updateSwUI();
-
-    // 6. Reset task state for new day
     state = { _date: todayKey() };
     LS.save('state', state);
-
-    // 7. Reload everything fresh from cloud
     await loadAll();
     renderTaskList();
     updateProgress();
@@ -1098,10 +1055,8 @@ function scheduleMidnightReset() {
     renderCalendar();
     updateCalendarStats();
     renderLogs();
-
-    showToast('🌅 New day — stopwatch reset!');
-
-    // Schedule next midnight
+    renderDailyNoteBar();
+    showToast('🌅 New day started!');
     scheduleMidnightReset();
   }, ms);
 }
@@ -1207,11 +1162,10 @@ function renderCalendar() {
   const today = new Date();
   const year  = calViewDate.getFullYear();
   const month = calViewDate.getMonth();
-  const months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
+  const months= ['January','February','March','April','May','June',
+                 'July','August','September','October','November','December'];
 
   document.getElementById('cal-month').textContent = `${months[month]} ${year}`;
-
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = '';
 
@@ -1230,13 +1184,11 @@ function renderCalendar() {
     el.className = 'cal-cell empty';
     grid.appendChild(el);
   }
-
   for (let d = 1; d <= daysInMonth; d++) {
     const ds   = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const cell = document.createElement('div');
     cell.className   = 'cal-cell';
     cell.textContent = d;
-
     if (ds === todayStr) {
       cell.classList.add('today');
     } else if (history[ds] === true) {
@@ -1246,7 +1198,6 @@ function renderCalendar() {
     } else if (new Date(year,month,d) > today) {
       cell.classList.add('future-day');
     }
-
     grid.appendChild(cell);
   }
 }
@@ -1259,13 +1210,21 @@ document.getElementById('cal-next').addEventListener('click', () => {
 });
 
 /* ═══════════════════════════════════════════
-   LOGS
-   Hours entry (_daily_hours) renders first
-   with special yellow styling
+   LOGS RENDER
+   - Shows today's task check-ins + past records
+   - Daily notes shown per day if they exist
 ═══════════════════════════════════════════ */
 function renderLogs() {
-  const section = document.getElementById('logs-section');
-  const dates   = Object.keys(logs).sort((a,b) => b.localeCompare(a));
+  const section  = document.getElementById('logs-section');
+  const today    = todayKey();
+
+  // All dates with task logs or daily notes, excluding today
+  // (today's note is shown in the bar above)
+  const allDates = new Set([
+    ...Object.keys(logs),
+    ...Object.keys(dailyNotes),
+  ]);
+  const dates = [...allDates].sort((a,b) => b.localeCompare(a));
 
   if (!dates.length) {
     section.innerHTML = `
@@ -1277,9 +1236,15 @@ function renderLogs() {
   }
 
   section.innerHTML = '';
+
   dates.forEach(date => {
-    const entries = logs[date];
-    if (!entries?.length) return;
+    const entries   = logs[date]        || [];
+    const dayNote   = dailyNotes[date]  || null;
+    const isToday   = date === today;
+
+    // For today — only show task check-ins (note is in the bar above)
+    // For past days — show daily note + task check-ins
+    if (!entries.length && (!dayNote || isToday)) return;
 
     const group = document.createElement('div');
     group.className = 'log-date-group';
@@ -1290,26 +1255,32 @@ function renderLogs() {
       })
     }</div>`;
 
-    // Sort: hours entry first, then rest by time
-    const sorted = [...entries].sort((a,b) => {
-      if (a.taskId === '_daily_hours') return -1;
-      if (b.taskId === '_daily_hours') return  1;
-      return 0;
-    });
-
-    sorted.forEach(entry => {
-      const isHoursEntry = entry.taskId === '_daily_hours';
+    // Daily note first (only for past days)
+    if (dayNote && dayNote.note && !isToday) {
       const el = document.createElement('div');
-      el.className = `log-entry${isHoursEntry ? ' hours-entry' : ''}`;
+      el.className = 'log-entry note-entry';
+      el.innerHTML = `
+        <div class="log-entry-task">📝 Daily Note</div>
+        <div class="log-entry-note">${escapeHtml(dayNote.note)}</div>
+        <div class="log-entry-meta">
+          <span class="log-entry-time">${dayNote.time || ''}</span>
+        </div>
+      `;
+      group.appendChild(el);
+    }
+
+    // Task check-ins
+    entries.forEach(entry => {
+      const el = document.createElement('div');
+      el.className = 'log-entry';
       el.innerHTML = `
         <div class="log-entry-task">${entry.task}</div>
-        <div class="log-entry-note">${entry.note ||
-          '<em style="color:var(--text-3)">No note recorded.</em>'}</div>
+        <div class="log-entry-note">${entry.note
+          ? escapeHtml(entry.note)
+          : '<em style="color:var(--text-3)">No note recorded.</em>'
+        }</div>
         <div class="log-entry-meta">
           <span class="log-entry-time">${entry.time}</span>
-          ${!isHoursEntry && entry.duration > 0
-            ? `<span class="log-entry-dur">⏱ ${formatTime(entry.duration)} worked today</span>`
-            : ''}
         </div>
       `;
       group.appendChild(el);
@@ -1320,7 +1291,7 @@ function renderLogs() {
 }
 
 /* ═══════════════════════════════════════════
-   MODALS
+   MODALS — CHECK IN
 ═══════════════════════════════════════════ */
 function openModal(task) {
   pendingTask = task;
@@ -1353,9 +1324,13 @@ document.getElementById('modal-confirm').addEventListener('click', async () => {
   showToast(`✓ ${taskCopy.name} checked in`);
 });
 
+/* ═══════════════════════════════════════════
+   MODALS — RENAME + CATEGORY
+═══════════════════════════════════════════ */
 function openRenameModal(task) {
   renamingTask = task;
-  document.getElementById('rename-input').value = task.name;
+  document.getElementById('rename-input').value    = task.name;
+  document.getElementById('rename-category').value = task.tag || 'Tasks';
   document.getElementById('rename-overlay').classList.add('open');
   setTimeout(() => {
     const inp = document.getElementById('rename-input');
@@ -1373,22 +1348,23 @@ document.getElementById('rename-overlay').addEventListener('click', e => {
 document.getElementById('rename-confirm').addEventListener('click', async () => {
   if (!renamingTask) return;
   const newName = document.getElementById('rename-input').value.trim();
+  const newTag  = document.getElementById('rename-category').value || 'Tasks';
   if (!newName) return showToast('⚠ Name cannot be empty');
   const task = TASKS.find(t => t.id === renamingTask.id);
-  if (task) { task.name = newName; saveTaskNamesLocal(); }
+  if (task) { task.name = newName; task.tag = newTag; saveTaskNamesLocal(); }
   const taskId = renamingTask.id;
   closeRenameModal();
   renderTaskList();
-  showToast(`✎ Renamed to "${newName}"`);
+  showToast(`✎ Updated to "${newName}" · ${newTag}`);
   try {
-    await apiPost('save-taskname', { task_id:taskId, task_name:newName });
+    await apiPost('save-taskname', { task_id:taskId, task_name:newName, tag:newTag });
   } catch(err) { console.warn('Name sync fail'); }
 });
 document.getElementById('rename-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('rename-confirm').click();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeRenameModal(); }
+  if (e.key === 'Escape') { closeModal(); closeRenameModal(); closeDailyNoteEdit(); }
 });
 
 /* ═══════════════════════════════════════════
@@ -1422,7 +1398,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
       v.style.display = k === tab ? 'block' : 'none';
     });
     if (tab === 'calendar') { renderCalendar(); updateCalendarStats(); }
-    if (tab === 'logs')     renderLogs();
+    if (tab === 'logs')     { renderDailyNoteBar(); renderLogs(); }
   });
 });
 
@@ -1454,13 +1430,11 @@ async function init() {
   initTheme();
   updateDateLabel();
   loadTaskNamesLocal();
-  loadSwLocal();
   loadFromLocal();
 
   renderTaskList();
   updateProgress();
   updateStreakChip();
-  updateSwUI();
   updateCountdown();
   setInterval(updateCountdown, 1000);
   renderCalendar();
@@ -1472,7 +1446,6 @@ async function init() {
   renderTaskList();
   updateProgress();
   updateStreakChip();
-  updateSwUI();
   updateCountdown();
   renderCalendar();
   updateCalendarStats();
